@@ -61,8 +61,8 @@ reports *cushion over floor* instead, which is (price − floor) / price, and th
 ## Edge cases handled
 
 - **SKU-007, competitor below margin floor:** shown in its own amber "Flagged" section with the gap (Rs.21),
-and there is no Apply button. Matching would sell below target margin. It is likely a loss-leader or a
-stock clearance, so the right move is to watch it or escalate.
+and there is no Apply button. The way it is handled is that the SKUs in which buy back is not possible because competitor is
+below floor is identified in the classification stage and are not sent to LLM for recomendation.
 - **Competitor exactly at floor:** we can only match at floor. The recommendation says the Buy Box becomes a
 tie and is not guaranteed.
 - **Buy Box lost but we're already cheaper or equal:** price is not the cause (stock, fulfilment, seller
@@ -85,13 +85,17 @@ Cut and Next with 4 more hours: : CSV upload (hardcoded data, per the hint), rea
 
 Scheduled competitor polling with alerts , an approval step for large cuts (for example, more than 10% change in price).
 
+Option to edit the price and apply can also be another functionality we can add so if they liked the recomendation but not
+the price suggested exactly, it can be edited and applied there itself.
+
 ## Design note
 
 The hardest call was how much to trust the LLM. Letting it reason freely about price gives better language,
 but a below-floor recommendation is an outright failure. So the LLM never sees an unbounded problem: the rules
 compute the legal range and the LLM only optimises inside it. That keeps the AI doing real work (judging
 whether a Rs.11 gap is worth a raise, sizing the undercut, explaining the tradeoff) while the floor stays a
-hard constraint in code, not a hope in a prompt.
+hard constraint in code, not a hope in a prompt. I have kept three level check to make sure the recomended price is not under
+the floor value.
 
 
 ## Demo Link
