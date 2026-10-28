@@ -92,3 +92,7 @@ but a below-floor recommendation is an outright failure. So the LLM never sees a
 compute the legal range and the LLM only optimises inside it. That keeps the AI doing real work (judging
 whether a Rs.11 gap is worth a raise, sizing the undercut, explaining the tradeoff) while the floor stays a
 hard constraint in code, not a hope in a prompt.
+
+
+## Demo Link
+https://www.loom.com/share/3f7d7f5686d941379f7abfc5c7d01928
